@@ -1,110 +1,103 @@
-# Windows Hosts File Configuration
+# Configuración del Archivo Hosts
 
-## Step-by-Step Instructions
+## Para Pop!_OS / Linux
 
-### 1. Open Command Prompt as Administrator
-- Press `Win + R`
-- Type `cmd`
-- Press `Ctrl + Shift + Enter` (to run as administrator)
-
-### 2. Navigate to Hosts File Location
-```cmd
-cd C:\Windows\System32\drivers\etc\
+### 1. Abrir Terminal
+```bash
+# Presiona Ctrl + Alt + T
 ```
 
-### 3. Backup Original Hosts File
-```cmd
-copy hosts hosts.backup
+### 2. Hacer backup del archivo hosts original
+```bash
+sudo cp /etc/hosts /etc/hosts.backup
 ```
 
-### 4. Edit Hosts File
-```cmd
-notepad hosts
+### 3. Editar el archivo hosts
+```bash
+sudo nano /etc/hosts
 ```
 
-### 5. Add Proxy Entries
-Add these lines at the end of the file (replace `YOUR-PROXY-URL.onrender.com` with your actual Render URL):
+### 4. Agregar las entradas del proxy
+Agrega estas líneas al final del archivo:
 
 ```
-# Steam Proxy Configuration - Added [DATE]
-YOUR-PROXY-URL.onrender.com client-update.akamai.steamstatic.com
-YOUR-PROXY-URL.onrender.com clientconfig.akamai.steamstatic.com
-YOUR-PROXY-URL.onrender.com steampipe.akamaihd.net
-YOUR-PROXY-URL.onrender.com steamcdn-a.akamaihd.net
-YOUR-PROXY-URL.onrender.com steamuserimages-a.akamaihd.net
-YOUR-PROXY-URL.onrender.com steamcommunity.com
-YOUR-PROXY-URL.onrender.com store.steampowered.com
-YOUR-PROXY-URL.onrender.com api.steampowered.com
-YOUR-PROXY-URL.onrender.com media.steampowered.com
-YOUR-PROXY-URL.onrender.com cdn.akamai.steamstatic.com
-YOUR-PROXY-URL.onrender.com shared.akamai.steamstatic.com
-YOUR-PROXY-URL.onrender.com community.akamai.steamstatic.com
-YOUR-PROXY-URL.onrender.com store.akamai.steamstatic.com
-YOUR-PROXY-URL.onrender.com steamworkshop.com
-YOUR-PROXY-URL.onrender.com steamcommunity-a.akamaihd.net
-YOUR-PROXY-URL.onrender.com broadcast.steampowered.com
-YOUR-PROXY-URL.onrender.com video.steampowered.com
-YOUR-PROXY-URL.onrender.com partner.steampowered.com
-YOUR-PROXY-URL.onrender.com help.steampowered.com
-YOUR-PROXY-URL.onrender.com support.steampowered.com
-YOUR-PROXY-URL.onrender.com checkout.steampowered.com
-YOUR-PROXY-URL.onrender.com login.steampowered.com
+# Steam Proxy Configuration - Netlify - Added 2025-09-01
+funny-gecko-341d6e.netlify.app client-update.akamai.steamstatic.com
+funny-gecko-341d6e.netlify.app clientconfig.akamai.steamstatic.com
+funny-gecko-341d6e.netlify.app steampipe.akamaihd.net
+funny-gecko-341d6e.netlify.app steamcdn-a.akamaihd.net
+funny-gecko-341d6e.netlify.app steamuserimages-a.akamaihd.net
+funny-gecko-341d6e.netlify.app steamcommunity.com
+funny-gecko-341d6e.netlify.app store.steampowered.com
+funny-gecko-341d6e.netlify.app api.steampowered.com
+funny-gecko-341d6e.netlify.app media.steampowered.com
+funny-gecko-341d6e.netlify.app cdn.akamai.steamstatic.com
+funny-gecko-341d6e.netlify.app shared.akamai.steamstatic.com
+funny-gecko-341d6e.netlify.app community.akamai.steamstatic.com
+funny-gecko-341d6e.netlify.app store.akamai.steamstatic.com
+funny-gecko-341d6e.netlify.app steamworkshop.com
+funny-gecko-341d6e.netlify.app steamcommunity-a.akamaihd.net
+funny-gecko-341d6e.netlify.app broadcast.steampowered.com
+funny-gecko-341d6e.netlify.app video.steampowered.com
+funny-gecko-341d6e.netlify.app partner.steampowered.com
+funny-gecko-341d6e.netlify.app help.steampowered.com
+funny-gecko-341d6e.netlify.app support.steampowered.com
+funny-gecko-341d6e.netlify.app checkout.steampowered.com
+funny-gecko-341d6e.netlify.app login.steampowered.com
 ```
 
-### 6. Save and Flush DNS
-```cmd
-ipconfig /flushdns
-ipconfig /release
-ipconfig /renew
+### 5. Guardar y limpiar DNS
+```bash
+# Guardar archivo: Ctrl + X, luego Y, luego Enter
+sudo systemctl flush-dns
+# O si no funciona:
+sudo systemd-resolve --flush-caches
 ```
 
-### 7. Verify Configuration
-```cmd
+### 6. Verificar configuración
+```bash
 nslookup client-update.akamai.steamstatic.com
 ```
 
-This should return your proxy server's IP address.
+## Comandos para Steam en Linux
 
-## Steam Launch Commands
-
-### Standard Launch (Recommended)
-```cmd
-"C:\Program Files (x86)\Steam\Steam.exe" -tcp -websocket
+### Lanzamiento estándar (Recomendado)
+```bash
+steam -tcp -websocket
 ```
 
-### Alternative Launch Options
-```cmd
-# With additional debugging
-"C:\Program Files (x86)\Steam\Steam.exe" -tcp -websocket -console -dev
+### Opciones alternativas
+```bash
+# Con debugging adicional
+steam -tcp -websocket -console -dev
 
-# If certificate issues persist (less secure)
-"C:\Program Files (x86)\Steam\Steam.exe" -tcp -websocket -insecure
+# Si persisten problemas de certificados
+steam -tcp -websocket -insecure
 
-# Force specific protocol
-"C:\Program Files (x86)\Steam\Steam.exe" -tcp -websocket -no-browser +@NoPromptForPassword 1
+# Forzar protocolo específico
+steam -tcp -websocket -no-browser +@NoPromptForPassword 1
 ```
 
-## Troubleshooting
+## Solución de Problemas
 
-### If Steam Still Can't Connect:
-1. Verify proxy is running: Visit `https://YOUR-PROXY-URL.onrender.com/health`
-2. Check hosts file syntax (no extra spaces, correct format)
-3. Restart Steam completely
-4. Try different launch parameters
-5. Check Windows Firewall settings
+### Si Steam no se puede conectar:
+1. Verificar proxy: `curl https://funny-gecko-341d6e.netlify.app/api/health`
+2. Revisar sintaxis del archivo hosts
+3. Reiniciar Steam completamente
+4. Probar diferentes parámetros de lanzamiento
+5. Verificar firewall
 
-### To Restore Original Configuration:
-```cmd
-cd C:\Windows\System32\drivers\etc\
-copy hosts.backup hosts
-ipconfig /flushdns
+### Para restaurar configuración original:
+```bash
+sudo cp /etc/hosts.backup /etc/hosts
+sudo systemd-resolve --flush-caches
 ```
 
-### Testing the Proxy:
-```cmd
-# Test if domain resolves to proxy
+### Probar el proxy:
+```bash
+# Verificar resolución de dominio
 nslookup client-update.akamai.steamstatic.com
 
-# Test proxy response
-curl -I https://YOUR-PROXY-URL.onrender.com/health
+# Probar respuesta del proxy
+curl -I https://funny-gecko-341d6e.netlify.app/api/health
 ```
