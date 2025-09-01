@@ -1,10 +1,11 @@
 [build]
-  command = "npm run build"
+  command = "npm ci && npm run build"
   functions = "netlify/functions"
   publish = "dist"
 
 [build.environment]
   NODE_ENV = "production"
+  NPM_FLAGS = "--include=dev"
 
 [functions]
   external_node_modules = ["@nestjs/core", "@nestjs/common", "@nestjs/platform-express", "compression", "helmet", "axios", "ws", "@vendia/serverless-express"]
