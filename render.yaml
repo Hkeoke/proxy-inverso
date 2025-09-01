@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: steam-proxy
+    env: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm run start:prod
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        fromService:
+          type: web
+          name: steam-proxy
+          property: port
+    healthCheckPath: /health
+    autoDeploy: true
