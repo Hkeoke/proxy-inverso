@@ -33,13 +33,26 @@ async function createServer() {
     await nestApp.init();
     
     const expressApp = nestApp.getHttpAdapter().getInstance();
-    cachedServer = serverlessExpress({ app: expressApp });
+    cachedServer = serverlessExpress({ 
+      app: expressApp,
+      eventSourceRoutes: {
+        'netlify': '/.*'
+      }
+    });
   }
   
   return cachedServer;
 }
 
 exports.handler = async (event, context) => {
+  // Add Netlify-specific event source detection
+  if (!event.httpMethod && !event.requestContext) {
+    event.httpMethod = 'GET';
+    event.path = event.path || '/';
+    event.headers = event.headers || {};
+    event.queryStringParameters = event.queryStringParameters || {};
+  }
+  
   const server = await createServer();
   return server(event, context);
 };
