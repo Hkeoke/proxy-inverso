@@ -1,0 +1,17 @@
+src/
+test/
+coverage/
+node_modules/
+.git/
+.env.local
+.env.development
+.env.test
+*.log
+.DS_Store
+Dockerfile
+docker-compose.yml
+render.yaml
+README.md
+.eslintrc.js
+.prettierrc
+.gitignore
